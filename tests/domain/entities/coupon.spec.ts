@@ -16,6 +16,7 @@ describe('Coupon Entity Unit Tests', () => {
   let params = {
     name: 'any_name',
     storeId: 'any_store',
+    link: 'any_link',
     image: 'any_image',
     oldPrice: 'any_oldPrice',
     price: 'any_price',
@@ -38,6 +39,10 @@ describe('Coupon Entity Unit Tests', () => {
     expect(() => {
       const coupon = makeSUT({ ...params, type: '' })
     }).toThrowError('Type is required')
+
+    expect(() => {
+      const coupon = makeSUT({ ...params, link: '' })
+    }).toThrowError('Link is required')
   })
 
   it('should garantee a offer type coupon recieves current price as a parameter', () => {
