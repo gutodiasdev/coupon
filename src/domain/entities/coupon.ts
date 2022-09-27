@@ -1,6 +1,6 @@
 export interface InputCoupon {
   name: string
-  store: string
+  storeId: string
   image: string
   oldPrice?: string
   currentPrice?: string
@@ -9,7 +9,7 @@ export interface InputCoupon {
 
 export class Coupon {
   private _name: string
-  private _store: string
+  private _storeId: string
   private _image: string
   private _currentPrice?: string
   private _oldPrice?: string
@@ -17,7 +17,7 @@ export class Coupon {
 
   constructor (input: InputCoupon) {
     this._name = input.name
-    this._store = input.store
+    this._storeId = input.storeId
     this._image = input.image
     this._oldPrice = input.oldPrice
     this._currentPrice = input.currentPrice
@@ -30,8 +30,8 @@ export class Coupon {
       throw new Error('Name is required')
     }
 
-    if (this._store.length === 0) {
-      throw new Error('Store is required')
+    if (this._storeId.length === 0) {
+      throw new Error('Store id is required')
     }
 
     if (this._image.length === 0) {

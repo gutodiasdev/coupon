@@ -8,8 +8,15 @@ class Person {
   }
 
   get firstName () { return this._firstName }
+
+  public create () {
+    return {
+      name: this._firstName,
+      lastName: this._lastName
+    }
+  }
 }
 
-const person = new Person('Augusto', 'Silva')
 
-console.log(person)
+const person = new Person('Augusto', 'Silva')
+console.log(person.create())

@@ -15,7 +15,7 @@ const makeSUT = (params: InputCoupon): OutputMakeSUT => {
 describe('Coupon Entity Unit Tests', () => {
   let params = {
     name: 'any_name',
-    store: 'any_store',
+    storeId: 'any_store',
     image: 'any_image',
     oldPrice: 'any_oldPrice',
     price: 'any_price',
@@ -28,8 +28,8 @@ describe('Coupon Entity Unit Tests', () => {
     }).toThrowError('Name is required')
 
     expect(() => {
-      const coupon = makeSUT({ ...params, store: '' })
-    }).toThrowError('Store is required')
+      const coupon = makeSUT({ ...params, storeId: '' })
+    }).toThrowError('Store id is required')
 
     expect(() => {
       const coupon = makeSUT({ ...params, image: '' })
