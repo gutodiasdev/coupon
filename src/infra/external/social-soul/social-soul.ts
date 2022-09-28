@@ -5,14 +5,14 @@ export interface InputSocialSoul {
   sourceId: string
 }
 
-export interface Event {
+export type Event = {
   event: string
   eventType: string
   fixedCommission: boolean
   commission: number
 }
 
-export interface Store {
+export type Store = {
   id: number
   name: string
   thumbnail: string
@@ -20,6 +20,54 @@ export interface Store {
   hasOffer: number
   maxCommission: number
   events: Event[]
+}
+
+export type Category = {
+  id: number
+  name: string
+  link: string
+}
+
+export type Offer = {
+  id: string
+  name: string
+  category: Category
+  link: string
+  thumbnail: string,
+  price: number,
+  discount: number,
+  installment: {
+    quantity: number,
+    value: number
+  },
+  store: {
+    id: number,
+    name: string,
+    thumbnail: string,
+    link: string,
+    invisible: boolean,
+    needPermission: boolean
+  }
+}
+
+export type Coupon = {
+  id: number
+  description: string
+  code: string
+  discount: number
+  store: {
+    id: number
+    name: string
+    image: string
+    link: string
+  },
+  category: {
+    id: number
+    name: string
+  },
+  vigency: string,
+  link: string,
+  new: boolean
 }
 
 export interface OutputSocialSoulGetStores {
@@ -38,7 +86,49 @@ export interface OutputSocialSoulGetStores {
   stores: Store[]
 }
 
-export class SocialSoul {
+export interface InputSocialSoulGetOffersFromStore {
+  storeId: string
+}
+
+export interface OutputSocialSoulGetOffersFromStore {
+  requestInfo: {
+    status: string
+    message: string
+    generatedDate: null
+  },
+  pagination: {
+    page: number
+    size: number
+    totalSize: number
+    totalPage: number
+    sortValues?: string[]
+  },
+  offers: Offer[]
+}
+
+export interface OutputSocialSoulGetCoupons {
+  requestInfo: {
+    status: string
+    message: string
+    generatedDate: null
+  },
+  pagination: {
+    page: number
+    size: number
+    totalSize: number
+    totalPage: number
+    sortValues?: string[]
+  },
+  coupons: Coupon[]
+}
+
+export interface SocialSoulInterface {
+  getStores (): Promise<OutputSocialSoulGetStores>
+  getOfferFromStore (params: InputSocialSoulGetOffersFromStore): Promise<OutputSocialSoulGetOffersFromStore>
+  getCoupons (): Promise<OutputSocialSoulGetCoupons>
+}
+
+export class SocialSoul implements SocialSoulInterface {
   private _appToken: string
   private _sourceId: string
 
@@ -57,9 +147,9 @@ export class SocialSoul {
     }
   }
 
-  private connect (): AxiosInstance {
+  private connect (apiVersion: string = 'v3'): AxiosInstance {
     return axios.create({
-      baseURL: `https://api.lomadee.com/v3/${this._appToken}`,
+      baseURL: `https://api.lomadee.com/${apiVersion}/${this._appToken}`,
       params: {
         sourceId: this._sourceId
       }
@@ -71,8 +161,62 @@ export class SocialSoul {
   }
 
   public async getStores (): Promise<OutputSocialSoulGetStores> {
-    const { data } = await this.connect().get('/store/_all')
+    const { data } = await this.connect().get<OutputSocialSoulGetStores>('/store/_all')
 
-    return data
+    return {
+      requestInfo: {
+        status: data.requestInfo.status,
+        message: data.requestInfo.message,
+        generatedDate: data.requestInfo.generatedDate,
+      },
+      pagination: {
+        page: data.pagination.page,
+        size: data.pagination.size,
+        totalSize: data.pagination.totalSize,
+        totalPage: data.pagination.totalPage,
+        sortValues: data.pagination.sortValues,
+      },
+      stores: data.stores
+    }
+  }
+
+  public async getOfferFromStore (params: InputSocialSoulGetOffersFromStore): Promise<OutputSocialSoulGetOffersFromStore> {
+    const { data } = await this.connect().get<OutputSocialSoulGetOffersFromStore>(`/offer/_store/${params.storeId}`)
+
+    return {
+      requestInfo: {
+        status: data.requestInfo.status,
+        message: data.requestInfo.message,
+        generatedDate: data.requestInfo.generatedDate
+      },
+      pagination: {
+        page: data.pagination.page,
+        size: data.pagination.size,
+        totalSize: data.pagination.totalSize,
+        totalPage: data.pagination.totalPage,
+        sortValues: data.pagination.sortValues
+      },
+      offers: data.offers
+    }
+  }
+
+  public async getCoupons (): Promise<OutputSocialSoulGetCoupons> {
+    const { data } = await this.connect('v2').get<OutputSocialSoulGetCoupons>('/coupon/_all')
+
+    return {
+      requestInfo: {
+        status: data.requestInfo.status,
+        message: data.requestInfo.message,
+        generatedDate: data.requestInfo.generatedDate
+      },
+      pagination: {
+        page: data.pagination.page,
+        size: data.pagination.size,
+        totalSize: data.pagination.totalSize,
+        totalPage: data.pagination.totalPage,
+        sortValues: data.pagination.sortValues
+      },
+      coupons: data.coupons
+    }
   }
 }
