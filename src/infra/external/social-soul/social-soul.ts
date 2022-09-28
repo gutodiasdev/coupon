@@ -59,7 +59,7 @@ export class SocialSoul {
 
   private connect (): AxiosInstance {
     return axios.create({
-      baseURL: `http://sandbox-api.lomadee.com/v3/${this._appToken}`,
+      baseURL: `https://api.lomadee.com/v3/${this._appToken}`,
       params: {
         sourceId: this._sourceId
       }

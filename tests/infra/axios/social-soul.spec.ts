@@ -37,7 +37,7 @@ describe('SocialSoul Unit Tests', () => {
     expect(sut.appToken).toBe('16053748295126c5e45a0')
   })
 
-  it('', async () => {
+  it('should return all SocialSoul stores when call getStores method', async () => {
     const mocked = mock<SocialSoul>()
 
     mocked.getStores.mockResolvedValue({
