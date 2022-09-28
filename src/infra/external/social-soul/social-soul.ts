@@ -88,6 +88,8 @@ export interface OutputSocialSoulGetStores {
 
 export interface InputSocialSoulGetOffersFromStore {
   storeId: string
+  pageCount?: number
+  resultSize?: number
 }
 
 export interface OutputSocialSoulGetOffersFromStore {
@@ -181,7 +183,12 @@ export class SocialSoul implements SocialSoulInterface {
   }
 
   public async getOfferFromStore (params: InputSocialSoulGetOffersFromStore): Promise<OutputSocialSoulGetOffersFromStore> {
-    const { data } = await this.connect().get<OutputSocialSoulGetOffersFromStore>(`/offer/_store/${params.storeId}`)
+    const { data } = await this.connect().get<OutputSocialSoulGetOffersFromStore>(`/offer/_store/${params.storeId}`, {
+      params: {
+        page: params.pageCount,
+        size: params.resultSize = 100
+      }
+    })
 
     return {
       requestInfo: {

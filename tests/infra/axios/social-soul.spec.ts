@@ -113,8 +113,8 @@ describe('SocialSoul Unit Tests', () => {
       "pagination": {
         "page": 1,
         "size": 12,
-        "totalSize": 19310,
-        "totalPage": 1610,
+        "totalSize": 1,
+        "totalPage": 2,
         "sortValues": [
           "1664232502000",
           "1654",
@@ -126,7 +126,7 @@ describe('SocialSoul Unit Tests', () => {
           "id": "100",
           "name": "Chave Biela de 11/16\" Gedore",
           "category": {
-            "id": 0,
+            "id": 1,
             "name": "Geral",
             "link": "http://api.lomadee.com/v3/1638927471938e7b04077/category/_id/0?sourceId=37145983"
           },
@@ -159,8 +159,8 @@ describe('SocialSoul Unit Tests', () => {
       "pagination": {
         "page": 1,
         "size": 12,
-        "totalSize": 19310,
-        "totalPage": 1610,
+        "totalSize": 1,
+        "totalPage": 2,
         "sortValues": [
           "1664232502000",
           "1654",
@@ -172,7 +172,7 @@ describe('SocialSoul Unit Tests', () => {
           "id": "100",
           "name": "Chave Biela de 11/16\" Gedore",
           "category": {
-            "id": 0,
+            "id": 1,
             "name": "Geral",
             "link": "http://api.lomadee.com/v3/1638927471938e7b04077/category/_id/0?sourceId=37145983"
           },
