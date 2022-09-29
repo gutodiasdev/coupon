@@ -28,10 +28,12 @@ export class AdapterSocialSoulOffers implements AdapterSocialSoulOffersInterface
 
     totalPage = pagination.totalPage
 
-    while (currentPage < totalPage) {
-      currentPage = currentPage + 1
-      const { offers: response } = await this.socialSoul.getOfferFromStore({ storeId: params.storeId, pageCount: currentPage })
-      offers = offers.concat(response)
+    if (totalPage > 1) {
+      while (currentPage < totalPage) {
+        currentPage = currentPage + 1
+        const { offers: response } = await this.socialSoul.getOfferFromStore({ storeId: params.storeId, pageCount: currentPage })
+        offers = offers.concat(response)
+      }
     }
 
     return {
