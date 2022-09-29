@@ -3,6 +3,9 @@ export interface InputCoupon {
   storeId: string
   link: string
   image: string
+  description?: string
+  expiration_date: string
+  discount: string
 }
 
 export class Coupon {
@@ -10,12 +13,18 @@ export class Coupon {
   private _storeId: string
   private _link: string
   private _image: string
+  private _discount: string
+  private _description?: string
+  private _expiration_date: string
 
   constructor (input: InputCoupon) {
     this._name = input.name
     this._storeId = input.storeId
     this._link = input.link
     this._image = input.image
+    this._description = input.description
+    this._expiration_date = input.expiration_date
+    this._discount = input.discount
     this.validate()
   }
 
@@ -34,6 +43,10 @@ export class Coupon {
 
     if (this._link.length === 0) {
       throw new Error('Link is required')
+    }
+
+    if (this._expiration_date.length === 0) {
+      throw new Error('Expiration date is required')
     }
   }
 }
