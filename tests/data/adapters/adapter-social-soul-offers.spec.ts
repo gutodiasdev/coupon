@@ -8,7 +8,7 @@ describe('AdapterSocialSoul Integration Tests', () => {
     const socialSoul = mock<SocialSoulInterface>()
     const sut = new AdapterSocialSoulOffers(socialSoul)
 
-    socialSoul.getOfferFromStore.mockResolvedValue({
+    socialSoul.getOfferFromStore.mockResolvedValueOnce({
       "requestInfo": {
         "status": "OK",
         "message": "SUCCESS",
@@ -53,6 +53,7 @@ describe('AdapterSocialSoul Integration Tests', () => {
         }
       ]
     })
+
 
     expect(await sut.getOffers({ storeId: 'any_id' })).toEqual({
       "offers": [
