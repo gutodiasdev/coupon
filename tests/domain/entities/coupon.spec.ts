@@ -17,10 +17,7 @@ describe('Coupon Entity Unit Tests', () => {
     name: 'any_name',
     storeId: 'any_store',
     link: 'any_link',
-    image: 'any_image',
-    oldPrice: 'any_oldPrice',
-    price: 'any_price',
-    type: 'any_type'
+    image: 'any_image'
   }
 
   it('should garantee Coupon entity recieves all required parameters', () => {
@@ -37,17 +34,7 @@ describe('Coupon Entity Unit Tests', () => {
     }).toThrowError('Image is required')
 
     expect(() => {
-      const coupon = makeSUT({ ...params, type: '' })
-    }).toThrowError('Type is required')
-
-    expect(() => {
       const coupon = makeSUT({ ...params, link: '' })
     }).toThrowError('Link is required')
-  })
-
-  it('should garantee a offer type coupon recieves current price as a parameter', () => {
-    expect(() => {
-      const coupon = makeSUT({ ...params, type: 'offer', currentPrice: '' })
-    }).toThrowError('Price is required for a offer type')
   })
 })

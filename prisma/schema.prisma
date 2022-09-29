@@ -9,3 +9,47 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Store {
+  id    String @id @default(uuid())
+  name  String
+  link  String
+  image String
+
+  coupons Coupon[]
+  offers  Offer[]
+
+  @@map("stores")
+}
+
+model Coupon {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  code            String?
+  discount        String?
+  link            String
+  expiration_date DateTime
+  is_verified     Boolean  @default(false)
+
+  store    Store  @relation(fields: [store_id], references: [id])
+  store_id String
+
+  @@map("coupons")
+}
+
+model Offer {
+  id          String  @id @default(uuid())
+  name        String
+  link        String
+  image       String
+  price       String
+  oldPrice    String?
+  discount    String?
+  is_verified Boolean @default(false)
+
+  store    Store  @relation(fields: [store_id], references: [id])
+  store_id String
+
+  @@map("offers")
+}
