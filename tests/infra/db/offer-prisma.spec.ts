@@ -1,5 +1,5 @@
 import { prismaMock } from '../../../src/infra/db/prisma/singleton'
-import { createOffer, listOfferFromStore } from '../../../src/main/config/prisma/offer-functions'
+import { createOffer, listOfferFromStore, updateOffer } from '../../../src/main/config/prisma/offer-functions'
 
 describe('Offer PrismaClient Unit Tests', () => {
   let params = {
@@ -54,5 +54,21 @@ describe('Offer PrismaClient Unit Tests', () => {
       store_id: 'any_storeId',
       is_verified: false,
     }])
+  })
+
+  it('should update a offer', async () => {
+    prismaMock.offer.update.mockResolvedValue({ ...params, name: 'new_name' })
+
+    await expect(updateOffer(params)).resolves.toEqual({
+      id: 'any_id',
+      name: 'new_name',
+      link: 'any_link',
+      image: 'any_image',
+      price: 'any_price',
+      oldPrice: 'any_oldPrice',
+      discount: 'any_discount',
+      store_id: 'any_storeId',
+      is_verified: false,
+    })
   })
 })
