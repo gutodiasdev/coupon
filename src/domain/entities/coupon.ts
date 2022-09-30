@@ -3,6 +3,7 @@ export interface InputCoupon {
   storeId: string
   link: string
   image: string
+  code: string
   description?: string
   expiration_date: string
   discount: string
@@ -13,12 +14,14 @@ export class Coupon {
   private _storeId: string
   private _link: string
   private _image: string
+  private _code: string
   private _discount: string
   private _description?: string
   private _expiration_date: string
 
   constructor (input: InputCoupon) {
     this._name = input.name
+    this._code = input.code
     this._storeId = input.storeId
     this._link = input.link
     this._image = input.image
@@ -47,6 +50,10 @@ export class Coupon {
 
     if (this._expiration_date.length === 0) {
       throw new Error('Expiration date is required')
+    }
+
+    if (this._code.length === 0) {
+      throw new Error('Code is required')
     }
   }
 }

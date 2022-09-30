@@ -20,7 +20,8 @@ describe('Coupon Entity Unit Tests', () => {
     image: 'any_image',
     description: 'any_description',
     expiration_date: 'any_expiration_date',
-    discount: 'any_discount'
+    discount: 'any_discount',
+    code: 'any_code'
   }
 
   it('should garantee Coupon entity recieves all required parameters', () => {
@@ -43,5 +44,9 @@ describe('Coupon Entity Unit Tests', () => {
     expect(() => {
       const coupon = makeSUT({ ...params, expiration_date: '' })
     }).toThrowError('Expiration date is required')
+
+    expect(() => {
+      const coupon = makeSUT({ ...params, code: '' })
+    }).toThrowError('Code is required')
   })
 })
