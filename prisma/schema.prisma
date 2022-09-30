@@ -23,14 +23,14 @@ model Store {
 }
 
 model Coupon {
-  id              String   @id @default(uuid())
+  id              String  @id @default(uuid())
   name            String
   description     String?
   code            String?
   discount        String?
   link            String
-  expiration_date DateTime
-  is_verified     Boolean  @default(false)
+  expiration_date String
+  is_verified     Boolean @default(false)
 
   store    Store  @relation(fields: [store_id], references: [id])
   store_id String
