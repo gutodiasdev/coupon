@@ -1,5 +1,5 @@
 import { prismaMock } from '../../../src/infra/db/prisma/singleton'
-import { createStore, findStoreById, findStoresByName, listStores, updateStore } from '../../../src/main/config/prisma/store-functions'
+import { createStore, deleteStore, findStoreById, findStoresByName, listStores, updateStore } from '../../../src/main/config/prisma/store-functions'
 
 describe('Store PrismaClient Unit Tests', () => {
   let params = {
@@ -83,7 +83,6 @@ describe('Store PrismaClient Unit Tests', () => {
       image: 'any_image2',
     }
 
-
     prismaMock.store.update.mockResolvedValue(params)
 
     await expect(updateStore(params)).resolves.toEqual({
@@ -91,6 +90,24 @@ describe('Store PrismaClient Unit Tests', () => {
       name: 'any_name2',
       link: 'any_link2',
       image: 'any_image2',
+    })
+  })
+
+  it('should delete a store', async () => {
+    const params = {
+      id: 'any_id',
+      name: 'any_name',
+      link: 'any_link',
+      image: 'any_image',
+    }
+
+    prismaMock.store.delete.mockResolvedValue(params)
+
+    await expect(deleteStore(params)).resolves.toEqual({
+      id: 'any_id',
+      name: 'any_name',
+      link: 'any_link',
+      image: 'any_image',
     })
   })
 })

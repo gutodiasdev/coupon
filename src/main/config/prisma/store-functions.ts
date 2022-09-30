@@ -21,6 +21,10 @@ interface InputUpdateStore {
   link: string
 }
 
+interface InputDeleteStore {
+  id: string
+}
+
 export async function createStore (params: InputCreateStore) {
   return await prisma.store.create({
     data: params
@@ -55,5 +59,11 @@ export async function updateStore (params: InputUpdateStore) {
       image: params.image,
       link: params.link,
     }
+  })
+}
+
+export async function deleteStore (params: InputDeleteStore) {
+  return await prisma.store.delete({
+    where: { id: params.id }
   })
 }
