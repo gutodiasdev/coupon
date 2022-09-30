@@ -10,8 +10,18 @@ interface CreateOffer {
   store_id: string
 }
 
+interface ListOfferFromStore {
+  storeId: string
+}
+
 export async function createOffer (params: CreateOffer) {
   return await prisma.offer.create({
     data: params
   })
+}
+
+export async function listOfferFromStore (params: ListOfferFromStore) {
+  const stores = await prisma.offer.findMany({ where: { store_id: params.storeId } })
+
+  return stores
 }
