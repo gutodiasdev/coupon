@@ -4,6 +4,12 @@ export interface InputStore {
   link: string
 }
 
+export interface OutputStore {
+  name: string
+  image: string
+  link: string
+}
+
 export class Store {
   private _name: string
   private _image: string
@@ -30,7 +36,15 @@ export class Store {
     }
   }
 
-  get image (): string {
+  get image () {
     return this._image
+  }
+
+  get name () {
+    return this._name
+  }
+
+  get link () {
+    return this._link
   }
 }
